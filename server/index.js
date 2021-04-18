@@ -15,17 +15,17 @@ const db = mysql.createConnection({
 });
 
 app.post('/create', (req, res) => {
-    const name      = req.body.name;
-    const age       = req.body.age;
-    const country   = req.body.country;
-    const position  = req.body.position;
-    const salary    = req.body.salary;
+    const name = req.body.name;
+    const age = req.body.age;
+    const country = req.body.country;
+    const position = req.body.position;
+    const salary = req.body.salary;
 
     db.query(
         'INSERT INTO employee (name, age, country, position, salary) VALUES (?,?,?,?,?)',
         [name, age, country, position, salary],
         (err, res) => {
-            if(err) {
+            if (err) {
                 console.log(err);
             }
             else {
@@ -34,6 +34,20 @@ app.post('/create', (req, res) => {
         }
     );
 });
+
+app.get('/employ', (req, res) => {
+
+    db.query('SELECT * FROM employee',
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                res.send(result);
+            }
+        })
+}
+);
 
 app.listen(3001, () => {
     console.log('running!')
